@@ -17,4 +17,4 @@ deployment:
     branch: master
     commands:
       - docker cp builder:/root/build/ $(pwd) # コンテナ内からHTML取り出し
-      - aws s3 sync $(pwd)/build/ s3://yodabacket/ccss
+      - aws s3 sync $(pwd)/build/ s3://circleci-sphinx-s3/
