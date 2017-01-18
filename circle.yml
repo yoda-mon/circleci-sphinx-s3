@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - docker build -t ccss ./Dockerfile --no-cache=true .
+    - docker build -t ccss --no-cache=true .
     - docker run -id --name builder ccss
     - docker cp $(pwd)/source/ builder:/root # ソースコードをコンテナ内へ
 
