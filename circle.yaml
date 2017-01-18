@@ -1,0 +1,22 @@
+machine:
+  timezone:
+    UTC
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker build -t ccss . --no-cache=true .
+    - docker run -id --name builder ccss
+    - docker cp $(pwd)/source/ builder:/root # ソースコードをコンテナ内へ
+
+test:
+  override:
+  - docker exec builder sphinx-build -b html source/ build/ # コンテナ内でHTMLをビルド
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - docker cp builder:/root/build/ $(pwd) # コンテナ内からHTML取り出し
+      - s3 sync $(pwd)/build/ s3://yodabacket/ccss
