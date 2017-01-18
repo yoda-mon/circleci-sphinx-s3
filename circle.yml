@@ -6,13 +6,11 @@ machine:
 
 dependencies:
   override:
-    - docker build -t ccss --no-cache=true .
-    - docker run -id --name builder ccss
-    - docker cp $(pwd)/source/ builder:/root # ソースコードをコンテナ内へ
+    - docker build -t ccss --no-cache=true . # コンテナ内へコピー
 
 test:
   override:
-  - docker exec builder sphinx-build -b html source/ build/ # コンテナ内でHTMLをビルド
+  - docker run --name builder ccss # コンテナ内でHTMLをビルド
 
 deployment:
   production:

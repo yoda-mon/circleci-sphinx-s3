@@ -6,7 +6,12 @@ Example environment of sphinx rendering and syncing with s3 bucket on Docker ima
 ```
 docker build -t ccss .
 ```
+```
+docker run --name builder ccss
+docker cp builder:/root/build/ $(pwd)
+```
 
+CircleCIがexecコマンド使えないのでボツになった案
 ```
 docker run -id --name builder ccss
 docker cp $(pwd)/source/ builder:/root
